@@ -1,30 +1,7 @@
 <template>
   <div>
-    <div class="card" v-if="!folder">
-      <div class="card-body">
-        <h4 class="card-title">Please set your iRacing folder and saving</h4>
-        <p class="card-text">
-          Your default folder should be something like "C:\Users\User\Documents\iRacing\setups"
-          <form>
-            <label for="folder" class="grey-text">Folder</label>
-            <input type="text" v-model="inputs.folder" class="form-control" placeholder="Folder">
-            <label for="saving" class="grey-text mt-2">Saving Method</label>
-            <div class="md-form mt-2">
-              <div class="col-sm-3">
-                <input type="radio" v-model="inputs.saving" value="track"> car\track\setup.sto
-              </div>
-              <div class="col-sm-3">
-                <input type="radio" v-model="inputs.saving" value="car"> car\setup.sto
-              </div>
-            </div>
-            <div class="text-center mt-4">
-              <button class="btn btn-primary" type="button" @click="set">Set</button>
-            </div>
-          </form>
-        </p>
-      </div>
-    </div>
-    <div id="content" style="height: 100vh; text-align: center;" class="pt-4" v-else>
+    <div id="content" style="height: 100vh; text-align: center;" class="pt-4">
+        <router-link to="/settings">Settings</router-link><br>
         Drop your setup here
     </div>
     <modal name="guess">
@@ -63,29 +40,16 @@
       hide (modal) {
         this.$modal.hide(modal)
       },
-      set () {
-        if (!this.inputs.folder) {
-          this.notify('error', 'Please set a folder.')
-        }
-        if (!this.inputs.saving) {
-          this.notify('error', 'Please set a saving method.')
-        }
-        if (this.inputs.folder && this.inputs.saving) {
-          this.saving = this.inputs.saving
-          localStorage.setItem('saving', this.saving)
-          if (this.$fs.existsSync(this.inputs.folder)) {
-            this.folder = this.inputs.folder
-            localStorage.setItem('folder', this.folder)
-          } else {
-            this.folder = null
-            localStorage.removeItem('folder')
-            this.notify('error', 'Folder does not seem to exist. Please double check.')
-          }
-        }
-      },
       guessInfo (path, filename) {
         this.guess = {path: null, name: null, car: null, track: null}
-        this.guess = this.$guesser(path, filename)
+        this.$axios.post(this.$backend + 'guess', {path: path, filename: filename}).then(res => {
+          this.guess = res.data
+          this.guess.name = filename
+          this.guess.path = path
+        }).catch(err => {
+          console.log(err)
+          this.notify('error', 'There has been an issue guessing your track. Please try again')
+        })
         this.$modal.show('guess')
       },
       copyFile () {
@@ -98,12 +62,14 @@
         })
       },
       fix () {
-
+        this.$router.push({path: 'fix', query: { filename: this.guess.name, path: this.guess.path }})
       }
     },
     mounted () {
       if (localStorage.getItem('folder')) {
         this.folder = localStorage.getItem('folder')
+      } else {
+        this.$route.push('settings')
       }
       this.saving = (localStorage.getItem('saving')) ? localStorage.getItem('saving') : 'track'
     },

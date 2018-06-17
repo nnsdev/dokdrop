@@ -4,14 +4,14 @@ import axios from 'axios'
 import App from './App'
 import router from './router'
 import Notifications from 'vue-notification'
-import guess from './guesser'
 import VModal from 'vue-js-modal'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.prototype.$fs = require('fs-extra')
-Vue.prototype.$guesser = guess
+Vue.prototype.$backend = 'http://setupguess.nns/api/'
+Vue.prototype.$axios = require('axios')
 
 Vue.use(Notifications)
 Vue.use(VModal, {dialog: true})
@@ -25,7 +25,7 @@ Vue.mixin({
         text: msg
       })
     },
-    createFolders (car, track) {
+    createFolders (car, track, season) {
       let folder = localStorage.getItem('folder') + '/' + car
       if (!this.$fs.existsSync(folder)) {
         this.$fs.mkdirSync(folder)
@@ -35,6 +35,10 @@ Vue.mixin({
       }
       if (!this.$fs.existsSync(folder + '/' + track)) {
         this.$fs.mkdirSync(folder + '/' + track)
+      }
+      if (localStorage.getItem('saving') === 'season' && !this.$fs.existsSync(folder + '/' + track)) {
+        this.$fs.mkdirSync(folder + '/' + track + '/' + season)
+        return folder + '/' + track + '/' + season + '/'
       }
       return folder + '/' + track + '/'
     }
