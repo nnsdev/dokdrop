@@ -1,15 +1,14 @@
 import { app, BrowserWindow } from 'electron' // eslint-disable-line
+import path from 'path'
+import { autoUpdater } from 'electron-updater'
 
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
-  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\') // eslint-disable-line
+  global.__static = path.join(__dirname, '/static').replace(/\\/g, '\\\\') // eslint-disable-line
 }
-const {
-  ipcMain
-} = require('electron')
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
@@ -23,35 +22,12 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 420,
     useContentSize: true,
-    width: 500
+    width: 700,
+    resizable: false,
+    icon: path.join(__dirname, '../../build/icons/png/1024x1024.png')
   })
   mainWindow.setMenu(null)
   mainWindow.loadURL(winURL)
-
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
-  mainWindow.on('drag-enter', () => {
-    console.log('drag-enter!')
-  })
-
-  mainWindow.on('drag-leave', () => {
-    console.log('drag-leave!')
-  })
-
-  mainWindow.on('drag-end', () => {
-    console.log('drag-end!')
-  })
-  mainWindow.on('drop', (evt, files) => {
-    console.log('drop')
-  })
-  ipcMain.on('ondragstart', (event, filePath) => {
-    console.log(event, filePath)
-    event.sender.startDrag({
-      file: filePath,
-      icon: '/path/to/icon.png'
-    })
-  })
 }
 
 app.on('ready', createWindow)
@@ -76,9 +52,6 @@ app.on('activate', () => {
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
  */
 
-/*
-import { autoUpdater } from 'electron-updater'
-
 autoUpdater.on('update-downloaded', () => {
   autoUpdater.quitAndInstall()
 })
@@ -86,4 +59,3 @@ autoUpdater.on('update-downloaded', () => {
 app.on('ready', () => {
   if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
 })
- */

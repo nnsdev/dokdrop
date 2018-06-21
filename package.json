@@ -1,6 +1,6 @@
 {
   "name": "dokdrop",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Julien Gelmar <julien@gelmar.app>",
   "description": "Dokdrop",
   "license": null,
@@ -16,11 +16,12 @@
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
-    "postinstall": "npm run lint:fix"
+    "postinstall": "npm run lint:fix",
+    "publish": "electron-builder --x64 --win -p always"
   },
   "build": {
     "productName": "dokdrop",
-    "appId": "org.simulatedgreg.electron-vue",
+    "appId": "org.juliengelmar.dokdrop",
     "directories": {
       "output": "build"
     },
@@ -45,11 +46,17 @@
     "mac": {
       "icon": "build/icons/icon.icns"
     },
+    "publish": {
+      "provider": "github"
+    },
     "win": {
       "icon": "build/icons/icon.ico"
     },
     "linux": {
-      "icon": "build/icons"
+      "icon": "build/icons/png"
+    },
+    "nsis": {
+      "oneClick": true
     }
   },
   "dependencies": {
