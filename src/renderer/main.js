@@ -11,6 +11,9 @@ if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.prototype.$fs = require('fs-extra')
+if (!process.env.PROD_URL) {
+  process.env.PROD_URL = 'https://dokdrop.whatan.app/api/'
+}
 Vue.prototype.$backend = (process.env.NODE_ENV === 'development') ? process.env.LOCAL_URL : process.env.PROD_URL
 Vue.prototype.$axios = require('axios')
 
