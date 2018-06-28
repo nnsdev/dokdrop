@@ -10,6 +10,9 @@
         <input type="radio" v-model="inputs.saving" value="season"> car\track\season\setup.sto
       </div>
       <div class="col-sm-12">
+        <input type="radio" v-model="inputs.saving" value="seasonfirst"> car\season\track\setup.sto
+      </div>
+      <div class="col-sm-12">
         <input type="radio" v-model="inputs.saving" value="track"> car\track\setup.sto
       </div>
       <div class="col-sm-12">

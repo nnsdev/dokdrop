@@ -11,7 +11,7 @@
           <label for="track">Track</label>
           <multiselect  v-model="form.track" track-by="search" label="name" value="search" :options="tracks"></multiselect>
         </div>
-        <div v-if="saving === 'season'" class="mt-2">
+        <div v-if="saving.startsWith('season')" class="mt-2">
           <label for="season">Season</label>
           <multiselect  v-model="form.season" track-by="search" label="name" value="search" :options="seasons"></multiselect>
         </div>
@@ -47,26 +47,22 @@
           this.notify('error', 'Please set a track.')
           return false
         }
-        if (this.saving === 'season' && !this.form.season) {
+        if (this.saving.startsWith('season') && !this.form.season) {
           this.notify('error', 'Please set a season.')
           return false
         }
         var newpath
-        if (this.saving === 'season') {
+        if (this.saving === 'season' || this.saving === 'seasonfirst') {
           newpath = this.createFolders(this.form.car.folder, this.form.track.search, this.form.season.search)
         } else if (this.saving === 'track') {
           newpath = this.createFolders(this.form.car.folder, this.form.track.search)
         } else {
           newpath = this.createFolders(this.form.car.folder)
         }
-        console.log(newpath + this.filename)
-        this.$fs.copy(this.path, newpath + this.filename).then(() => {
-          this.notify('success', 'File successfully copied')
-          this.$router.push('landing-page')
-        }).catch(err => {
-          console.log(err)
-          this.notify('error', 'Some kind of error happened')
-        })
+        this.copySetup(
+          this.path,
+          newpath + this.filename
+        )
       }
     },
     created () {

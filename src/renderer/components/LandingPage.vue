@@ -17,7 +17,7 @@
           <div class="col-xs-4">
             <strong>Car</strong><br>
             {{ guess.car ? guess.car[1] : 'Not guessed' }}<br>
-            <p class="mt-4" v-if="(saving === 'car' && guess.car) || (saving === 'track' && guess.car && guess.track) || (saving === 'season' && guess.car && guess.track && guess.season)">
+            <p class="mt-4" v-if="(saving === 'car' && guess.car) || (saving === 'track' && guess.car && guess.track) || (saving.startsWith('season') && guess.car && guess.track && guess.season)">
               <a @click="copyFile" class="text-primary">Correct!</a> or <a @click="fix" class="text-primary">Wrong :(</a>
             </p>
             <p class="mt-4" v-else>
@@ -28,7 +28,7 @@
             <strong>Track</strong><br>
             {{ guess.track ? guess.track[1] : 'Not guessed' }}<br>
           </div>
-          <div class="col-xs-4 mx-2" v-if="saving === 'season'">
+          <div class="col-xs-4 mx-2" v-if="saving.startsWith('season')">
             <strong>Season</strong><br>
             {{ guess.season ? guess.season[1] : 'Not guessed'}}
           </div>
@@ -68,13 +68,10 @@
       },
       copyFile () {
         let season = (typeof this.guess.season === 'undefined') ? null : this.guess.season[1]
-        var newpath = this.createFolders(this.guess.car[2], this.guess.track[0], season)
-        this.$fs.copy(this.guess.path, newpath + this.guess.name).then(() => {
-          this.notify('success', 'File successfully copied')
-        }).catch(err => {
-          console.log(err)
-          this.notify('error', 'Some kind of error happened')
-        })
+        this.copySetup(
+          this.guess.path,
+          this.createFolders(this.guess.car[2], this.guess.track[0], season) + this.guess.name
+        )
       },
       fix () {
         this.$router.push({path: 'fix', query: { filename: this.guess.name, path: this.guess.path }})

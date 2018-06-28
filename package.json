@@ -1,6 +1,6 @@
 {
   "name": "dokdrop",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Julien Gelmar <julien@gelmar.app>",
   "description": "Dokdrop",
   "license": null,
@@ -20,6 +20,19 @@
     "publish": "electron-builder --x64 --win -p always"
   },
   "build": {
+    "nsis": {
+      "oneClick": true,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": false,
+      "deleteAppDataOnUninstall": true,
+      "createDesktopShortcut": true,
+      "installerIcon": "build/icons/icon.ico",
+      "uninstallerIcon": "build/icons/icon.ico",
+      "uninstallDisplayName": "Uninstall Dokdrop",
+      "runAfterFinish": true
+    },
+    "buildVersion": "0.1.1",
     "productName": "dokdrop",
     "appId": "org.juliengelmar.dokdrop",
     "directories": {
@@ -54,9 +67,6 @@
     },
     "linux": {
       "icon": "build/icons/png"
-    },
-    "nsis": {
-      "oneClick": true
     }
   },
   "dependencies": {

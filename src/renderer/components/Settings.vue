@@ -11,7 +11,7 @@
       <h4 class="card-title">About</h4>
       <p class="card-body">
         Made by <a class="text-primary" @click="external('https://gelmar.app')">Julien Gelmar</a><br>
-        Version 0.1
+        Version 0.1.1
       </p>
     </div>
   </div>
