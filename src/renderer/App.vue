@@ -11,13 +11,10 @@
   }
 </script>
 <style>
-@import "../../node_modules/font-awesome/css/font-awesome.min.css";
-@import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-@import "../../node_modules/mdbootstrap/css/mdb.min.css";
-.vue-notification {
-  padding-top: 20px !important;
-}
-html, body {
-  height: 100%;
+@import '../../node_modules/element-ui/lib/theme-chalk/index.css';
+@import '../../node_modules/npm-font-open-sans/open-sans.css';
+* {
+  font-family: "Open Sans";
+  font-size: 12px;
 }
 </style>

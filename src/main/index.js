@@ -20,10 +20,10 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 420,
+    height: 600,
     useContentSize: true,
-    width: 700,
-    resizable: false,
+    width: 900,
+    resizable: (process.env.NODE_ENV === 'development'),
     icon: path.join(__dirname, '../../build/icons/png/1024x1024.png')
   })
   mainWindow.setMenu(null)

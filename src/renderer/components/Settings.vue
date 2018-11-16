@@ -1,20 +1,20 @@
 <template>
 <div>
-  <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">Please set your iRacing folder and saving</h4>
+  <el-card class="box-card">
+    <div slot="header" class="clearfix">
+      Please set your iRacing folder and saving
+    </div>
+    <div>
       <setting-card :buttons="true"></setting-card>
     </div>
-  </div>
-  <div class="card mt-4">
-    <div class="card-body">
-      <h4 class="card-title">About</h4>
-      <p class="card-body">
+  </el-card>
+  <el-card class="box-card">
+    <div class="clearfix" slot="header">About</div>
+    <div>
         Made by <a class="text-primary" @click="external('https://gelmar.app')">Julien Gelmar</a><br>
-        Version 0.1.1
-      </p>
+        Version 0.2
     </div>
-  </div>
+  </el-card>
 </div>
 </template>
 

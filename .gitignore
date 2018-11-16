@@ -9,3 +9,4 @@ npm-debug.log.*
 thumbs.db
 !.gitkeep
 src/renderer/env.js
+src/renderer/env.json

@@ -1,6 +1,6 @@
 {
   "name": "dokdrop",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "author": "Julien Gelmar <julien@gelmar.app>",
   "description": "Dokdrop",
   "license": null,
@@ -32,7 +32,7 @@
       "uninstallDisplayName": "Uninstall Dokdrop",
       "runAfterFinish": true
     },
-    "buildVersion": "0.1.1",
+    "buildVersion": "0.2.0",
     "productName": "dokdrop",
     "appId": "org.juliengelmar.dokdrop",
     "directories": {
@@ -72,7 +72,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
+    
     "electron-updater": "^2.21.10",
+    "element-ui": "^2.4.8",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.8.0",
@@ -82,14 +84,18 @@
     "hammerjs": "^2.0.8",
     "jquery": "^3.3.1",
     "mdbootstrap": "^4.5.4",
+    "node-irsdk": "^2.1.4",
     "node-waves": "^0.7.6",
+    "npm-font-open-sans": "^1.1.0",
     "popper.js": "^1.14.3",
     "vue": "^2.3.3",
     "vue-electron": "^1.0.6",
     "vue-js-modal": "^1.3.15",
     "vue-multiselect": "^2.1.0",
     "vue-notification": "^1.3.10",
-    "vue-router": "^2.5.3"
+    "vue-router": "^2.5.3",
+    "vuex": "^3.0.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
@@ -110,6 +116,7 @@
     "electron": "^1.7.5",
     "electron-builder": "^19.19.1",
     "electron-debug": "^1.4.0",
+    "electron-rebuild": "^1.8.2",
     "electron-devtools-installer": "^2.2.0",
     "eslint": "^4.4.1",
     "eslint-config-airbnb-base": "^11.2.0",
